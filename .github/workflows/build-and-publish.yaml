@@ -17,15 +17,15 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - package: ticket-sharder
+          - package: tickets-sharder
             dockerfile: sharder/main.Dockerfile
           - package: whitelabel-sharder
             dockerfile: sharder/whitelabel.Dockerfile
-          - package: ticket-gateway
+          - package: tickets-gateway
             dockerfile: http-gateway/Dockerfile
           - package: premiumproxy
             dockerfile: patreon-proxy/Dockerfile
-          - package: ticket-sync
+          - package: tickets-sync
             dockerfile: cache-sync-service/Dockerfile
     permissions:
       contents: read
