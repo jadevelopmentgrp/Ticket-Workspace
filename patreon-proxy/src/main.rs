@@ -11,13 +11,10 @@ use patreon::Entitlement;
 use patreon::Poller;
 
 use std::collections::HashMap;
-use std::str::FromStr;
 use std::sync::{Arc, RwLock};
 
 use chrono::prelude::*;
 
-use sentry::types::Dsn;
-use sentry_tracing::EventFilter;
 use std::time::Duration;
 use tokio::time::sleep;
 
@@ -31,7 +28,7 @@ use tracing_subscriber::EnvFilter;
 pub async fn main() -> Result<(), Error> {
     let config = Config::new().expect("Failed to load config from environment variables");
 
-    let _guard = configure_observability(&config);
+    configure_observability(&config);
 
     info!("Connecting to database...");
     let db_client = Database::connect(&config).await?;
@@ -128,25 +125,8 @@ async fn handle_refresh(
     Ok(tokens)
 }
 
-fn configure_observability(config: &Config) -> sentry::ClientInitGuard {
-    let _guard = sentry::init(sentry::ClientOptions {
-        dsn: config
-            .sentry_dsn
-            .clone()
-            .map(|dsn| Dsn::from_str(dsn.as_str()).expect("Invalid DSN")),
-        debug: config.debug_mode,
-        release: sentry::release_name!(),
-        ..Default::default()
-    });
-
-    let sentry_layer = sentry_tracing::layer().event_filter(|meta| match meta.level() {
-        &tracing::Level::ERROR | &tracing::Level::WARN => EventFilter::Exception,
-        _ => EventFilter::Ignore,
-    });
-
-    let registry = tracing_subscriber::registry()
-        .with(EnvFilter::from_default_env())
-        .with(sentry_layer);
+fn configure_observability(config: &Config) {
+    let registry = tracing_subscriber::registry().with(EnvFilter::from_default_env());
 
     if config.json_log {
         registry
@@ -155,8 +135,6 @@ fn configure_observability(config: &Config) -> sentry::ClientInitGuard {
     } else {
         registry.with(tracing_subscriber::fmt::layer()).init();
     }
-
-    _guard
 }
 
 fn start_server(

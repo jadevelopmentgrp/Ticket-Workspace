@@ -29,9 +29,6 @@ mimalloc = { version = "0.1", optional = true }
 reqwest = { version = "0.11", features = ["json", "rustls-tls-webpki-roots"] }
 flate2 = { version = "1.0", features = ["tokio", "zlib-ng-compat"], default-features = false, optional = true }
 envy = "0.4"
-sentry = { version = "0.34", features = ["debug-logs", "rustls"], optional = true }
-sentry-tracing = { version = "0.34", optional = true }
-sentry-panic = { version = "0.34", optional = true }
 parking_lot = "0.12"
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
@@ -41,11 +38,10 @@ hyper = { version = "0.14", features = ["server", "http1", "http2"], optional = 
 event-stream = { path = "../event-stream" }
 
 [features]
-default = ["use-mimalloc", "skip-initial-guild-creates", "use-sentry", "metrics", "resume-after-identify"]
+default = ["use-mimalloc", "skip-initial-guild-creates", "metrics", "resume-after-identify"]
 compression = ["flate2", "reqwest/gzip"]
 whitelabel = []
 skip-initial-guild-creates = []
-use-sentry = ["sentry", "sentry-tracing", "sentry-panic"]
 metrics = ["prometheus", "lazy_static", "hyper"]
 resume-after-identify = []
 use-mimalloc = ["mimalloc"]

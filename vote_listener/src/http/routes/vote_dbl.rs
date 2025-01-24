@@ -33,7 +33,7 @@ pub async fn vote_dbl_handler(
     }
 
     if let Err(e) = server.database.add_vote(body.id).await {
-        error!("Error while adding vote: {}", e); // TODO: Sentry
+        error!("Error while adding vote: {}", e);
         return (
             StatusCode::INTERNAL_SERVER_ERROR,
             Json(Response::error("Database error")),

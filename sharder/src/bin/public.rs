@@ -2,8 +2,7 @@ use std::sync::Arc;
 
 use model::user::{ActivityType, StatusType, StatusUpdate};
 use sharder::{
-    await_shutdown, setup_sentry, Config, PublicShardManager, RedisSessionStore, ShardCount,
-    ShardManager,
+    await_shutdown, Config, PublicShardManager, RedisSessionStore, ShardCount, ShardManager,
 };
 
 use sharder::{build_redis, metrics_server, Result};
@@ -25,15 +24,10 @@ static GLOBAL: Jemalloc = Jemalloc;
 #[global_allocator]
 static GLOBAL: MiMalloc = MiMalloc;
 
-// Sentry doesn't support #[tokio::main]
 fn main() -> Result<()> {
     // init sharder options
     let config = Config::from_envvar();
 
-    #[cfg(feature = "use-sentry")]
-    let _guard = setup_sentry(&config);
-
-    #[cfg(not(feature = "use-sentry"))]
     tracing_subscriber::fmt::init();
 
     tokio::runtime::Builder::new_multi_thread()

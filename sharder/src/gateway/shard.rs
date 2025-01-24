@@ -1,4 +1,3 @@
-#[cfg(feature = "use-sentry")]
 use std::default::Default;
 use std::str;
 use std::sync::Arc;
@@ -390,7 +389,7 @@ impl<T: EventForwarder> Shard<T> {
                 }
 
                 // handle internal commands
-                command = command_rx => {
+                _command = command_rx => {
                     #[cfg(feature = "whitelabel")]
                     {
                         let Some(command) = command else {continue};
@@ -628,7 +627,7 @@ impl<T: EventForwarder> Shard<T> {
                 return Ok(());
             }
 
-            Event::GuildCreate(g) => {
+            Event::GuildCreate(_g) => {
                 self.increment_received_count().await;
 
                 #[cfg(feature = "whitelabel")]

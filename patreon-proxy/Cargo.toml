@@ -17,8 +17,6 @@ warp = { version = "0.3", default-features = false }
 rustls = "0.21"
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
-sentry = "0.31"
-sentry-tracing = "0.31"
 envy = "0.4"
 deadpool-postgres = "0.10"
 url = "2"

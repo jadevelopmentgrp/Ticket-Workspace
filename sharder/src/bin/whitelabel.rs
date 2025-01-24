@@ -4,9 +4,6 @@ use sharder::{
     await_shutdown, build_redis, Config, RedisSessionStore, ShardManager, WhitelabelShardManager,
 };
 
-#[cfg(feature = "use-sentry")]
-use sharder::setup_sentry;
-
 use database::{sqlx::postgres::PgPoolOptions, Database};
 
 use sharder::event_forwarding::KafkaEventForwarder;
@@ -35,10 +32,6 @@ static GLOBAL: MiMalloc = MiMalloc;
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let config = Config::from_envvar();
 
-    #[cfg(feature = "use-sentry")]
-    let _guard = setup_sentry(&config);
-
-    #[cfg(not(feature = "use-sentry"))]
     env_logger::init();
 
     // init db

@@ -11,7 +11,6 @@ pub struct Config {
     pub redis_addr: String,
     pub redis_password: Option<String>,
     pub redis_threads: usize,
-    pub sentry_dsn: String,
     pub worker_svc_uri: Option<String>,
     pub kafka_brokers: Vec<String>,
     pub kafka_topic: String,
