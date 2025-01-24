@@ -8,7 +8,7 @@ WORKDIR /tmp/compile
 
 COPY . .
 
-RUN cargo build --release --bin whitelabel --no-default-features --features whitelabel,skip-initial-guild-creates,,metrics
+RUN cargo build --release --bin whitelabel --no-default-features --features whitelabel,skip-initial-guild-creates,metrics
 
 FROM debian:buster
 

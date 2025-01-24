@@ -73,7 +73,7 @@ impl PostgresCache {
 
                             info!(id, "Cache worker disconnected");
 
-                            kill_tx.send(());
+                            let _ = kill_tx.send(());
                             Err(backoff::Error::Transient(CacheError::Disconnected))
                         })
                         .await;
@@ -164,7 +164,7 @@ impl Cache for PostgresCache {
     }
 
     #[tracing::instrument(name = "store_guilds", skip(self, guilds), fields(guild_count = guilds.len()))]
-    async fn store_guilds(&self, mut guilds: Vec<Guild>) -> Result<()> {
+    async fn store_guilds(&self, guilds: Vec<Guild>) -> Result<()> {
         if guilds.is_empty() {
             return Ok(());
         }
@@ -223,7 +223,7 @@ impl Cache for PostgresCache {
     }
 
     #[tracing::instrument(name = "store_users", skip(self, users), fields(user_count = users.len()))]
-    async fn store_users(&self, mut users: Vec<User>) -> Result<()> {
+    async fn store_users(&self, users: Vec<User>) -> Result<()> {
         if !self.opts.users {
             return Ok(());
         }
@@ -282,7 +282,7 @@ impl Cache for PostgresCache {
     }
 
     #[tracing::instrument(name = "store_roles", skip(self, roles), fields(role_count = roles.len()))]
-    async fn store_roles(&self, mut roles: Vec<Role>, guild_id: Snowflake) -> Result<()> {
+    async fn store_roles(&self, roles: Vec<Role>, guild_id: Snowflake) -> Result<()> {
         if !self.opts.roles {
             return Ok(());
         }

@@ -2,9 +2,6 @@ use crate::Config;
 use deadpool::managed::PoolConfig;
 use deadpool::Runtime;
 use deadpool_redis::{Config as RedisConfig, Pool};
-use tracing::Level;
-use tracing_subscriber::prelude::*;
-use tracing_subscriber::EnvFilter;
 
 /// panics on err
 #[tracing::instrument(skip(config))]

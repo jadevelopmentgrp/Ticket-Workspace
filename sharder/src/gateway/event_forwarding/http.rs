@@ -16,7 +16,7 @@ impl HttpEventForwarder {
     }
 
     pub fn build_http_client() -> reqwest::Client {
-        let mut builder = reqwest::Client::builder()
+        let builder = reqwest::Client::builder()
             .connect_timeout(Duration::from_secs(3))
             .use_rustls_tls();
 

@@ -228,7 +228,7 @@ impl Worker {
         res
     }
 
-    async fn get_guild(&self, id: Snowflake) -> Result<Option<Guild>> {
+    async fn get_guild(&self, _id: Snowflake) -> Result<Option<Guild>> {
         /*self.client
             .query(
                 r#"SELECT "data" FROM guilds WHERE "guild_id" = $1;"#,
@@ -310,7 +310,7 @@ impl Worker {
         Ok(())
     }
 
-    async fn get_channel(&self, id: Snowflake) -> Result<Option<Channel>> {
+    async fn get_channel(&self, _id: Snowflake) -> Result<Option<Channel>> {
         unimplemented!()
     }
 
@@ -361,7 +361,7 @@ impl Worker {
         Ok(())
     }
 
-    async fn get_user(&self, id: Snowflake) -> Result<Option<User>> {
+    async fn get_user(&self, _id: Snowflake) -> Result<Option<User>> {
         /*let row = self
             .client
             .query_one(
@@ -447,7 +447,11 @@ impl Worker {
         Ok(())
     }
 
-    async fn get_member(&self, user_id: Snowflake, guild_id: Snowflake) -> Result<Option<Member>> {
+    async fn get_member(
+        &self,
+        _user_id: Snowflake,
+        _guild_id: Snowflake,
+    ) -> Result<Option<Member>> {
         unimplemented!()
     }
 
@@ -501,7 +505,7 @@ impl Worker {
         Ok(())
     }
 
-    async fn get_role(&self, id: Snowflake) -> Result<Option<Role>> {
+    async fn get_role(&self, _id: Snowflake) -> Result<Option<Role>> {
         unimplemented!()
     }
 
@@ -561,7 +565,7 @@ impl Worker {
         Ok(())
     }
 
-    async fn get_emoji(&self, emoji_id: Snowflake) -> Result<Option<Emoji>> {
+    async fn get_emoji(&self, _emoji_id: Snowflake) -> Result<Option<Emoji>> {
         unimplemented!()
     }
 
@@ -623,8 +627,8 @@ impl Worker {
 
     async fn get_voice_state(
         &self,
-        user_id: Snowflake,
-        guild_id: Snowflake,
+        _user_id: Snowflake,
+        _guild_id: Snowflake,
     ) -> Result<Option<VoiceState>> {
         unimplemented!()
     }
